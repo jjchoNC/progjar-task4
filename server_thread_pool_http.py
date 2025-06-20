@@ -13,18 +13,18 @@ httpserver = HttpServer()
 #maka class ProcessTheClient dirubah dulu menjadi function, tanpda memodifikasi behaviour didalamnya
 
 def ProcessTheClient(connection,address):
-		rcv=""
+		rcv=b""
 		while True:
 			try:
 				data = connection.recv(32)
 				if data:
 					#merubah input dari socket (berupa bytes) ke dalam string
 					#agar bisa mendeteksi \r\n
-					d = data.decode()
+					d = data
 					rcv=rcv+d
 					if rcv[-2:]==b'\r\n':
 						#end of command, proses string
-						#logging.warning("data dari client: {}" . format(rcv))
+						logging.warning("data dari client: {}" . format(rcv))
 						hasil = httpserver.proses(rcv)
 						#hasil akan berupa bytes
 						#untuk bisa ditambahi dengan string, maka string harus di encode

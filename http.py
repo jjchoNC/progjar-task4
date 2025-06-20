@@ -56,6 +56,7 @@ class HttpServer:
 				return self.http_post(object_address, all_headers)
 			elif (method==b'DELETE'):
 				object_address = j[1].strip()
+				print("object_address: ", object_address)
 				return self.http_delete(object_address, all_headers)
 			else:
 				return self.response(400,'Bad Request','',{})
@@ -106,25 +107,27 @@ class HttpServer:
 		else:
 			return self.response(400,'Bad Request','',{'Content-type': 'text/plain'})
 		
-def http_delete(self,object_address,headers):
-	files = glob('./*')
-	#print(files)
-	thedir='./'
-	if (object_address == '/'):
-		return self.response(400,'Bad Request','',{})
-	if (object_address == '/video'):
-		return self.response(400,'Bad Request','',{})
-	if (object_address == '/santai'):
-		return self.response(400,'Bad Request','',{})
-	object_address=object_address[1:]
-	object_address = object_address.decode('utf-8')
-	if thedir+object_address not in files:
-		return self.response(404,'Not Found','',{})
-	try:
-		os.remove(thedir+object_address)
-		return self.response(200,'OK','File Deleted',{'Content-type': 'text/plain'})
-	except Exception as e:
-		return self.response(500,'Internal Server Error',str(e),{'Content-type': 'text/plain'})
+	def http_delete(self,object_address,headers):
+		files = glob('./*')
+		print(object_address[1:])
+		#print(files)
+		thedir='./'
+		if (object_address == b'/'):
+			return self.response(400,'Bad Request','',{})
+		if (object_address == b'/video'):
+			return self.response(400,'Bad Request','',{})
+		if (object_address == b'/santai'):
+			return self.response(400,'Bad Request','',{})
+		object_address=object_address[1:]
+		object_address = object_address.decode()
+		print(thedir+object_address)
+		if thedir+object_address not in files:
+			return self.response(404,'Not Found','',{})
+		try:
+			os.remove(thedir+object_address)
+			return self.response(200,'OK','File Deleted',{'Content-type': 'text/plain'})
+		except Exception as e:
+			return self.response(500,'Internal Server Error',str(e),{'Content-type': 'text/plain'})
 
 #>>> import os.path
 #>>> ext = os.path.splitext('/ak/52.png')

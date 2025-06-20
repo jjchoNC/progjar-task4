@@ -3,8 +3,9 @@ import os
 import sys
 import logging
 import ssl
+import shutil
 
-def make_socket(destination_address='localhost', port=8889):
+def make_socket(destination_address='localhost', port=8885):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = (destination_address, port)
@@ -19,6 +20,7 @@ def send_command(command_str, server_address):
     port_server = server_address[1]
     sock = make_socket(alamat_server, port_server)
     sock.settimeout(5)
+    
     try:
         sock.sendall(command_str.encode())
         data_received = b""
@@ -94,15 +96,18 @@ def delete_command(server_address, filename):
     return result
 
 if __name__ == "__main__":
-    server_addr = ('localhost', 8889)
+    server_addr = ('localhost', 8885)
     
     f = open('test.txt', 'w')
     f.write('This is a test file.\n')
     f.close()
     
+    shutil.copyfile("donalbebek.jpg", "donalbebek_bu.jpg")
+    
     get_command(server_addr, 'list')
     post_command(server_addr, 'test.txt')
-    post_command(server_addr, 'pokijan.jpg')
+    post_command(server_addr, 'donalbebek.jpg')
     delete_command(server_addr, 'test.txt')
-    delete_command(server_addr, 'pokijan.jpg')
+    delete_command(server_addr, 'donalbebek.jpg')
        
+    shutil.copyfile("donalbebek_bu.jpg", "donalbebek.jpg")
