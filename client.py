@@ -96,7 +96,7 @@ def delete_command(server_address, filename):
     return result
 
 if __name__ == "__main__":
-    server_addr = ('localhost', 8885)
+    server_addr = ('172.16.16.101', 8885)
     
     f = open('test.txt', 'w')
     f.write('This is a test file.\n')
