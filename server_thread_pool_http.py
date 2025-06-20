@@ -22,7 +22,7 @@ def ProcessTheClient(connection,address):
 					#agar bisa mendeteksi \r\n
 					d = data.decode()
 					rcv=rcv+d
-					if rcv[-2:]=='\r\n':
+					if rcv[-2:]==b'\r\n':
 						#end of command, proses string
 						#logging.warning("data dari client: {}" . format(rcv))
 						hasil = httpserver.proses(rcv)
